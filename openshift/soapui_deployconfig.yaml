@@ -62,8 +62,6 @@ objects:
             - env:
                 - name: DEBUG
                   value: 'False'
-                - name: SOAPUI_PORT
-                  value: ${SOAPUI_PORT}
               image: " "
               imagePullPolicy: Always
               name: "${NAME}"
@@ -122,5 +120,3 @@ parameters:
     required: true
   - name: DEBUG
     value: 'False'
-  - name: SOAPUI_PORT
-    value: 3000
