@@ -47,16 +47,6 @@
             "ref": "${GIT_REFERENCE}"
           }
         },
-        "strategy": {
-          "type": "Source",
-          "sourceStrategy": {
-            "from": {
-              "kind": "ImageStreamTag",
-              "namespace": "openshift",
-              "name": "nodejs:8"
-            }
-          }
-        },
         "output": {
           "to": {
             "kind": "ImageStreamTag",
