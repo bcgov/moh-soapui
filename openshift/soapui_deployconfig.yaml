@@ -13,17 +13,22 @@ objects:
         app: "${NAME}"
     spec:
       ports:
-        - name: web
+        - name: "8080-tcp"
           port: 8080
+          protocol: "TCP"
           targetPort: 8080
       selector:
         app: "${NAME}"
+      sessionAffinity: "None"
+      type: "ClusterIP"
   - apiVersion: v1
     kind: Route
     metadata:
       name: "${NAME}"
     spec:
       host: "${APPLICATION_DOMAIN}"
+      port:
+        targetPort: "8080-tcp"
       to:
         kind: Service
         name: "${NAME}"
@@ -62,7 +67,7 @@ objects:
             - env:
                 - name: DEBUG
                   value: 'False'
-              image: " "
+              image: "${NAME}"
               imagePullPolicy: Always
               name: "${NAME}"
               ports:
@@ -82,16 +87,6 @@ objects:
           schedulerName: default-scheduler
           securityContext: {}
           terminationGracePeriodSeconds: 30
-          affinity:
-            podAntiAffinity:
-              requiredDuringSchedulingIgnoredDuringExecution:
-                - labelSelector:
-                    matchExpressions:
-                      - key: name
-                        operator: In
-                        values:
-                          - "${NAME}"
-                  topologyKey: kubernetes.io/hostname
       triggers:
         - imageChangeParams:
             automatic: true
